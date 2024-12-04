@@ -67,7 +67,8 @@ void aste::runReplayMode(const aste::ExecutionContext &context, const std::strin
 
   ASTE_DEBUG << "Looking for dt = " << asteConfiguration.startdt;
   for (const auto &mesh : asteConfiguration.asteInterfaces.front().meshes) {
-    if (mesh.filename().find(std::to_string(asteConfiguration.startdt)) == std::string::npos)
+    auto meshfilename = std::filesystem::path(mesh.filename()).filename().string();
+    if (meshfilename.find(".dt" + std::to_string(asteConfiguration.startdt)) == std::string::npos)
       round++;
     else
       break;
